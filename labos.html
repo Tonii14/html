@@ -25,12 +25,22 @@
     </style>
     <script>
       var myGamePieces = [];
+      function random(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+      }
       function startGame() {
-        myGamePieces.push(new component(30, 30, "red", 150, 150));
-        myGamePieces.push(new component(30, 30, "red", 0, 0));
-        myGamePieces.push(new component(30, 30, "red", 25, 25));
-        myGamePieces.push(new component(30, 30, "red", 250, 150));
-        myGamePieces.push(new component(30, 30, "red", 70, 180));
+        var minComp = 1;
+        var maxComp = 10;
+        for (var i = 0; i < random(minComp, maxComp); i++) {
+          myGamePieces.push(
+            new component(30, 30, "red", random(30, 400), random(30, 400))
+          );
+        }
+        // myGamePieces.push(new component(30, 30, "red", 150, 150));
+        // myGamePieces.push(new component(30, 30, "red", 0, 0));
+        // myGamePieces.push(new component(30, 30, "red", 25, 25));
+        // myGamePieces.push(new component(30, 30, "red", 250, 150));
+        // myGamePieces.push(new component(30, 30, "red", 70, 180));
         myGameArea.start();
       }
       var myGameArea = {
@@ -88,10 +98,9 @@
       function updateGameArea() {
         myGameArea.clear();
         for (var i = 0; i < myGamePieces.length; i++) {
-          var pogodeno = 5 - myGamePieces.length;
           myGameArea.context.font = "15px Georgia";
           myGameArea.context.fillText(
-            "Broj komponenti : " + myGamePieces.length + "/" + pogodeno,
+            "Broj komponenti : " + myGamePieces.length,
             320,
             20
           );

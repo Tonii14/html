@@ -33,7 +33,7 @@
         var maxComp = 10;
         for (var i = 0; i < random(minComp, maxComp); i++) {
           myGamePieces.push(
-            new component(30, 30, "red", random(30, 400), random(30, 400))
+            new component(30, 30, "red", random(30, 400), random(30, 200))
           );
         }
         // myGamePieces.push(new component(30, 30, "red", 150, 150));
@@ -50,6 +50,7 @@
           this.canvas.width = 480;
           this.canvas.height = 270;
           this.context = this.canvas.getContext("2d");
+          this.clicked = 0;
           document.body.insertBefore(this.canvas, document.body.childNodes[0]);
           this.frameNo = 0;
           this.interval = setInterval(updateGameArea, 20);
@@ -95,15 +96,19 @@
           this.y -= this.speed_y;
         };
       }
+      const len = myGamePieces.lenght;
       function updateGameArea() {
         myGameArea.clear();
+        myGameArea.context.fillText(
+          "Broj komponenti : " +
+            myGamePieces.length +
+            " / " +
+            myGameArea.clicked,
+          320,
+          20
+        );
         for (var i = 0; i < myGamePieces.length; i++) {
           myGameArea.context.font = "15px Georgia";
-          myGameArea.context.fillText(
-            "Broj komponenti : " + myGamePieces.length,
-            320,
-            20
-          );
           myGamePieces[i].newPos();
           myGamePieces[i].update();
         }
@@ -127,6 +132,7 @@
                 rect.top + myGamePieces[i].y + myGamePieces[i].height / 2
             ) {
               myGamePieces.splice(i, 1);
+              myGameArea.clicked += 1;
             }
           }
         }
@@ -135,6 +141,5 @@
   </head>
   <body onload="startGame()">
     <h1>3. labos iz web-a</h1>
-    <p id="pogodeno">0</p>
   </body>
 </html>
